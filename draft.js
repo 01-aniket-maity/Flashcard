@@ -33,7 +33,6 @@ const oddNumbers = filterOddNumbers([1, 2, 3, 4, 5]);
 function filterOddNumbers(array)
 {
     let newArray=[];
-    let k=0;
     for(let i=0;i<array.length;i++)
     {
         if(array[i]%2 != 0)
@@ -83,9 +82,8 @@ console.log(missingNumber); //* Output: 4
 const duplicateNumbers = findDuplicates([1, 2, 3, 2, 4, 5, 4, 6]);
 function findDuplicates(array)
 {
-    array.sort(); //[1,2,2,3,4,4,5,6]
+    array.sort(); 
     let newArray=[];
-    let c=0;
     for(let i=0;i<array.length-1;i++)
     {
         if(array[i]==array[i+1] && newArray.indexOf(array[i])==-1)
