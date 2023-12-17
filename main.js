@@ -38,7 +38,10 @@ const startButton = document.getElementById('start-button');
 const resetButton = document.getElementById('reset-button');
 const doneButton = document.getElementById('done-button');
 const scoreElement = document.getElementById('score-card');
+const alertElement=document.getElementById('alerting');
+alertElement.classList.add('hidden');
 let score = 10;
+let value = 0;
 let clickedItems = [];
 
 const handleStart = () => {
@@ -54,9 +57,13 @@ const handleStart = () => {
       console.log(item.word);
       cardElement.classList.add('border-red-500');
       cardElement.innerHTML = `<strong>${item.word}:</strong> ${item.meaning}`;
-      score--;
-      scoreElement.textContent = `Score = ${score}`;
+      if(clickedItems.indexOf(item)==-1)
+      {
       clickedItems.push(item);
+      score--;
+      value++;
+      scoreElement.textContent = `Score = ${score}`;
+      }
     })
   });
 
@@ -66,42 +73,40 @@ const handleStart = () => {
 };
 
 const handleReset = () => {
+  
+  // reset button event
+  
   cardContainer.innerHTML = '';
-
   startButton.classList.remove('hidden');
   resetButton.classList.add('hidden');
   doneButton.classList.add('hidden');
-  scoreElement.textContent = 'score = 10';
+  alertElement.classList.add('hidden');
+  score=10;
+  value=0;
+  scoreElement.textContent = `Score = ${score}`;
+  clickedItems=[];
 };
+
 const handleDone = () => {
+
+  // done button event
   
   cardContainer.innerHTML = '';
-
-  
   clickedItems.forEach((item) => {
     const clickedElement = document.createElement('div');
     clickedElement.innerHTML = `<strong>${item.word}:</strong> ${item.meaning}`;
-
+    clickedElement.className = 'border-2 border-red-500 rounded-md p-5 h-full '
     cardContainer.appendChild(clickedElement);
-  });
-
-  
-  flashcardsData.forEach((item) => {
-    if (!clickedItems.some((clickedItem) => clickedItem.word === item.word)) {
-      const unclickedElement = document.createElement('div');
-      unclickedElement.innerHTML = `<strong>${item.word}:</strong> ${item.meaning}`;
-      unclickedElement.style.display = 'none'; 
-      cardContainer.appendChild(unclickedElement);
-    }
   });
 
   
   doneButton.classList.add('hidden');
   resetButton.classList.remove('hidden');
-  startButton.classList.remove('hidden');
+  startButton.classList.add('hidden');
 
-
-
+  
+  alertElement.textContent = ` You got ${value} wrong`;
+  alertElement.classList.remove('hidden');
   scoreElement.textContent = `Score = ${score}`;
 };
 
