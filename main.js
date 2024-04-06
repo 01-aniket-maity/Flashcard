@@ -1,3 +1,4 @@
+
 // flashcard code starts
 
 const flashcardsData = [
@@ -38,10 +39,8 @@ const startButton = document.getElementById('start-button');
 const resetButton = document.getElementById('reset-button');
 const doneButton = document.getElementById('done-button');
 const scoreElement = document.getElementById('score-card');
-const alertElement=document.getElementById('alerting');
-alertElement.classList.add('hidden');
-let score = 10;
-let value = 0;
+
+let point = 0;
 let clickedItems = [];
 
 const handleStart = () => {
@@ -54,15 +53,14 @@ const handleStart = () => {
 
     //* Card click event
     cardElement.addEventListener('click', () => {
-      console.log(item.word);
+
       cardElement.classList.add('border-red-500');
       cardElement.innerHTML = `<strong>${item.word}:</strong> ${item.meaning}`;
-      if(clickedItems.indexOf(item)==-1)
-      {
-      clickedItems.push(item);
-      score--;
-      value++;
-      scoreElement.textContent = `Score = ${score}`;
+      if (clickedItems.indexOf(item) == -1) {
+        clickedItems.push(item);
+        point++;
+
+        scoreElement.textContent = `Selected: ${point}`;
       }
     })
   });
@@ -73,24 +71,24 @@ const handleStart = () => {
 };
 
 const handleReset = () => {
-  
+
   // reset button event
-  
+
   cardContainer.innerHTML = '';
   startButton.classList.remove('hidden');
   resetButton.classList.add('hidden');
   doneButton.classList.add('hidden');
-  alertElement.classList.add('hidden');
-  score=10;
-  value=0;
-  scoreElement.textContent = `Score = ${score}`;
-  clickedItems=[];
+
+  point = 0;
+
+  scoreElement.textContent = `Selected: ${point}`;
+  clickedItems = [];
 };
 
 const handleDone = () => {
 
   // done button event
-  
+
   cardContainer.innerHTML = '';
   clickedItems.forEach((item) => {
     const clickedElement = document.createElement('div');
@@ -99,25 +97,13 @@ const handleDone = () => {
     cardContainer.appendChild(clickedElement);
   });
 
-  
+
   doneButton.classList.add('hidden');
   resetButton.classList.remove('hidden');
   startButton.classList.add('hidden');
-
-  
-  alertElement.textContent = ` You got ${value} wrong`;
-  alertElement.classList.remove('hidden');
-  scoreElement.textContent = `Score = ${score}`;
+  scoreElement.textContent = `Selected: ${point}`;
 };
 
 
 
 // flashcard code ends
-
-
-
-
-
-
-
-
